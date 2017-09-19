@@ -35,9 +35,10 @@ float true_rms(float rtInput, float *delayLineArray, unsigned int delayLineCount
 
 
 // function-2
-// fundamental RMS full cycle
+// cs element generation
+//cos->c, sin->s
 
-float fundamental_rms(float rtInput,float *coeff, unsigned int coeffLength, float *zValues){
+float cs_generation(float rtInput,float *coeff, unsigned int coeffLength, float *zValues){
 
 	unsigned int i;
      float *z1_ptr,*z2_ptr,*coeff_ptr;
