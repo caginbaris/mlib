@@ -1,6 +1,7 @@
 
 
 #include <math.h>
+#include "measurement_functions.h"
 
 
 
@@ -74,45 +75,45 @@ float cs_generation(float rtInput,float *coeff, unsigned int coeffLength, float 
 
 // function-3
 //spectral analysis
-//
+// caution: input structure has to be initialized and used only ones
+// external pCounter is needed
+//twfactors truncated to 13th
+ 
 
-void signal_spectra(	float rtInput, 
-						float *qBuffer, 				//updated buffer
-						unsigned int qBufferLength, 	//updated buffer length
-						float *twBufferReal,              //twiddle factor Real coeffs
-						float *twBufferImag,			//twiddle factor Imag coeffs	
-						float *foutReal,				//back real for hist
- 						float *foutImag,				//back imag for hist
-					     float *foutMag					//magnitude output
-	)
+
+void signal_spectra(
+	
+	float rtInput, 
+	struct spectra *h,
+	unsigned int qBufferLength,	//updated buffer length
+	float *twBufferReal,			//twiddle factor Real coeffs
+	float *twBufferImag,			//twiddle factor Imag coeffs    
+	unsigned int pCounter)
 
 {
 
 	float x_error;
 	float temp_real,temp_imag;
 	float out_scale;
-	static unsigned int f_count=0;
-	
+	unsigned int i;
 
 	out_scale=1.41421356f/(float)qBufferLength;
 
-	//x_error=*qBuffer-rtInput;
-	//*qBuffer++=rtInput;
 
-	x_error=qBuffer[f_count]-rtInput;
-	qBuffer[f_count]=rtInput;
+	x_error=h->qBuffer[pCounter]-rtInput;
+	h->qBuffer[pCounter]=rtInput;
 
+	for(i=0;i<13;i++){
 
+	temp_real =twBufferReal[i]* (h->foutReal[i]+x_error)-twBufferImag[i]*h->foutImag[i];
+	temp_imag=twBufferImag[i]* (h->foutReal[i]+x_error)+twBufferReal[i]*h->foutImag[i];
 
-	if(++f_count==qBufferLength){f_count=0;}
+	h->foutMag[i]=out_scale*sqrtf(temp_real*temp_real+temp_imag*temp_imag);
 
-	temp_real =twBufferReal[0]* (foutReal[0]+x_error)-twBufferImag[0]*foutImag[0];
-	temp_imag=twBufferImag[0]* (foutReal[0]+x_error)+twBufferReal[0]*foutImag[0];
-
-	foutMag[0]=out_scale*sqrtf(temp_real*temp_real+temp_imag*temp_imag);
-
-	foutReal[0]=temp_real;
-	foutImag[0]=temp_imag;
+	h->foutReal[i]=temp_real;
+	h->foutImag[i]=temp_imag;
+	
+	}
 
 
 }
