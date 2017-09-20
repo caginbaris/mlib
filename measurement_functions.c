@@ -1,10 +1,14 @@
+
+
+#include <math.h>
+
+
+
 // function-1
 // True RMS half cycle
 // delayLineArray contains half period circular data of input
 // delayLineCounter global counter for true rms calculation
 // length of delayLineArray - mult. inverse can be u
-
-#include <math.h>
 
 float true_rms(float rtInput, float *delayLineArray, unsigned int delayLineCounter, unsigned int arrayLength)
 {
@@ -26,7 +30,7 @@ float true_rms(float rtInput, float *delayLineArray, unsigned int delayLineCount
 
 	}
 
-	rms = sqrt(rms_sum / arrayLength);
+	rms = sqrtf(rms_sum / arrayLength);
 
 	return rms;
 
@@ -37,6 +41,7 @@ float true_rms(float rtInput, float *delayLineArray, unsigned int delayLineCount
 // function-2
 // cs element generation
 //cos->c, sin->s
+//fs:2.5/5 e3... and scale value should be considered
 
 float cs_generation(float rtInput,float *coeff, unsigned int coeffLength, float *zValues){
 
@@ -65,6 +70,53 @@ float cs_generation(float rtInput,float *coeff, unsigned int coeffLength, float 
 	return(output);
 
 }
+
+
+// function-3
+//spectral analysis
+//
+
+void signal_spectra(	float rtInput, 
+						float *qBuffer, 				//updated buffer
+						unsigned int qBufferLength, 	//updated buffer length
+						float *twBufferReal,              //twiddle factor Real coeffs
+						float *twBufferImag,			//twiddle factor Imag coeffs	
+						float *foutReal,				//back real for hist
+ 						float *foutImag,				//back imag for hist
+					     float *foutMag					//magnitude output
+	)
+
+{
+
+	float x_error;
+	float temp_real,temp_imag;
+	float out_scale;
+	static unsigned int f_count=0;
+	
+
+	out_scale=1.41421356f/(float)qBufferLength;
+
+	//x_error=*qBuffer-rtInput;
+	//*qBuffer++=rtInput;
+
+	x_error=qBuffer[f_count]-rtInput;
+	qBuffer[f_count]=rtInput;
+
+
+
+	if(++f_count==qBufferLength){f_count=0;}
+
+	temp_real =twBufferReal[0]* (foutReal[0]+x_error)-twBufferImag[0]*foutImag[0];
+	temp_imag=twBufferImag[0]* (foutReal[0]+x_error)+twBufferReal[0]*foutImag[0];
+
+	foutMag[0]=out_scale*sqrtf(temp_real*temp_real+temp_imag*temp_imag);
+
+	foutReal[0]=temp_real;
+	foutImag[0]=temp_imag;
+
+
+}
+
 
 
 
