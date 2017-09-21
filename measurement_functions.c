@@ -72,10 +72,100 @@ float cs_generation(float rtInput,float *coeff, unsigned int coeffLength, float 
 
 }
 
+//function-3
+void cs_computations(struct phase_cs_in p_in, struct phase_cs_out *p_out ){
 
-// function-3
+	
+   	p_out->rms_V2 =(p_in.Vc)*(p_in.Vc) + (p_in.Vs)*(p_in.Vs);
+    	p_out->rms_I2 =(p_in.Ic)*(p_in.Ic) + (p_in.Is)*(p_in.Is);
+
+   	p_out->rms_V =sqrtf((p_in.Vc)*(p_in.Vc) + (p_in.Vs)*(p_in.Vs));
+    	p_out->rms_I =sqrtf((p_in.Ic)*(p_in.Ic) + (p_in.Is)*(p_in.Is));
+
+	p_out->P=(p_in.Vc)*(p_in.Ic) +(p_in.Vs)*(p_in.Is);
+	p_out->Q=(p_in.Vs)*(p_in.Ic) -(p_in.Vc)*(p_in.Is);
+
+
+	if(p_out->rms_I2>1.0f){
+
+	p_out->X=2.0f*p_out->Q/p_out->rms_I2;
+	p_out->R=2.0f*p_out->X/p_out->rms_I2;
+	
+	}
+
+
+	p_out->phase_V= -atan2f(p_in.Vc,p_in.Vs)+pi;
+	p_out->phase_I= -atan2f(p_in.Ic,p_in.Is)+pi;
+
+	p_out->phase_disp=p_out->phase_I-p_out->phase_V;
+
+	if(p_out->phase_disp<0)	{p_out->phase_disp=p_out->phase_disp+_2pi;}
+	if(p_out->phase_disp>pi)	{p_out->phase_disp=p_out->phase_disp-_2pi;}
+
+     
+	
+
+
+}
+
+
+//function-4
+
+
+void sym_comp(struct phase_cs_in pa, struct phase_cs_in pb,struct phase_cs_in pc,struct sym_out*sym){
+
+	
+	sym->V0  =(pa.Vc + pb.Vc + 	pc.Vc)*sym_3;
+	sym->V1  =(pa.Vc + pb.Vc*sym_r +   pc.Vc*sym_r - pb.Vs*sym_i + pc.Vs*sym_i)*sym_3;
+	sym->V2 =(pa.Vc + pb.Vc*sym_r +   pc.Vc*sym_r + pb.Vs*sym_i - pc.Vs*sym_i)*sym_3;
+
+
+	sym->I0  =(pa.Ic + pb.Ic + 	pc.Ic)*sym_3;
+	sym->I1  =(pa.Ic + pb.Ic*sym_r +   pc.Ic*sym_r - pb.Is*sym_i + pc.Is*sym_i)*sym_3;
+	sym->I2 =(pa.Ic + pb.Ic*sym_r +   pc.Ic*sym_r + pb.Is*sym_i - pc.Is*sym_i)*sym_3;
+	
+	
+	}
+
+
+//function-5
+
+void sym_mag(struct sym_out sym, struct sym_out *sym_back, struct sym_out *sym_rms  ){
+
+	float temp;
+
+	temp = (sym.V0-sym_back->V0)*sym_rms_scale;
+	sym_rms->V0=sqrtf(temp*temp+sym.V0*sym.V0);
+	sym_back->V0=sym.V0;
+
+	temp = (sym.V1-sym_back->V1)*sym_rms_scale;
+	sym_rms->V1=sqrtf(temp*temp+sym.V1*sym.V1);
+	sym_back->V1=sym.V1;
+
+	temp = (sym.V2-sym_back->V2)*sym_rms_scale;
+	sym_rms->V2=sqrtf(temp*temp+sym.V2*sym.V2);
+	sym_back->V2=sym.V2;
+
+
+	temp = (sym.I0-sym_back->I0)*sym_rms_scale;
+	sym_rms->I0=sqrtf(temp*temp+sym.I0*sym.I0);
+	sym_back->I0=sym.I0;
+
+	temp = (sym.I1-sym_back->I1)*sym_rms_scale;
+	sym_rms->I1=sqrtf(temp*temp+sym.I1*sym.I1);
+	sym_back->I1=sym.I1;
+
+	temp = (sym.I2-sym_back->I2)*sym_rms_scale;
+	sym_rms->I2=sqrtf(temp*temp+sym.I2*sym.I2);
+	sym_back->I2=sym.I2;
+
+
+}
+
+
+// function-6
 //spectral analysis
-// caution: input structure has to be initialized and used only ones
+// caution: input structure has to be initialized and used only once
 // external pCounter is needed
 //twfactors truncated to 13th
  
@@ -97,7 +187,7 @@ void signal_spectra(
 	float out_scale;
 	unsigned int i;
 
-	out_scale=1.41421356f/(float)qBufferLength;
+	out_scale=sqrt2/(float)qBufferLength;
 
 
 	x_error=h->qBuffer[pCounter]-rtInput;
@@ -117,6 +207,9 @@ void signal_spectra(
 
 
 }
+
+
+
 
 
 
