@@ -2,11 +2,14 @@
 #define pi       3.1415926535897932f
 #define _2pi  	6.2831853071795864f
 #define sqrt2  1.4142135623730950f
+#define _i2     0.5f
 
-#define sym_3 0.333333333333333f
+
+#define sym_i3 0.333333333333333f
 #define sym_r  0.5f
 #define sym_i  0.86602540378443864f
 #define sym_rms_scale 1.0f
+
 
 
 float true_rms(float rtInput, float *delayLineArray, unsigned int delayLineCounter, unsigned int arrayLength);

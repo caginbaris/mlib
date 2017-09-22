@@ -82,14 +82,14 @@ void cs_computations(struct phase_cs_in p_in, struct phase_cs_out *p_out ){
    	p_out->rms_V =sqrtf((p_in.Vc)*(p_in.Vc) + (p_in.Vs)*(p_in.Vs));
     	p_out->rms_I =sqrtf((p_in.Ic)*(p_in.Ic) + (p_in.Is)*(p_in.Is));
 
-	p_out->P=(p_in.Vc)*(p_in.Ic) +(p_in.Vs)*(p_in.Is);
-	p_out->Q=(p_in.Vs)*(p_in.Ic) -(p_in.Vc)*(p_in.Is);
+	p_out->P= _i2*((p_in.Vc)*(p_in.Ic) +(p_in.Vs)*(p_in.Is));
+	p_out->Q=_i2*((p_in.Vs)*(p_in.Ic) -(p_in.Vc)*(p_in.Is));
 
 
 	if(p_out->rms_I2>1.0f){
 
-	p_out->X=2.0f*p_out->Q/p_out->rms_I2;
-	p_out->R=2.0f*p_out->X/p_out->rms_I2;
+	p_out->X=p_out->Q/p_out->rms_I2;
+	p_out->R=p_out->X/p_out->rms_I2;
 	
 	}
 
@@ -115,14 +115,14 @@ void cs_computations(struct phase_cs_in p_in, struct phase_cs_out *p_out ){
 void sym_comp(struct phase_cs_in pa, struct phase_cs_in pb,struct phase_cs_in pc,struct sym_out*sym){
 
 	
-	sym->V0  =(pa.Vc + pb.Vc + 	pc.Vc)*sym_3;
-	sym->V1  =(pa.Vc + pb.Vc*sym_r +   pc.Vc*sym_r - pb.Vs*sym_i + pc.Vs*sym_i)*sym_3;
-	sym->V2 =(pa.Vc + pb.Vc*sym_r +   pc.Vc*sym_r + pb.Vs*sym_i - pc.Vs*sym_i)*sym_3;
+	sym->V0  =(pa.Vc + pb.Vc + 	pc.Vc)*sym_i3;
+	sym->V1  =(pa.Vc + pb.Vc*sym_r +   pc.Vc*sym_r - pb.Vs*sym_i + pc.Vs*sym_i)*sym_i3;
+	sym->V2 =(pa.Vc + pb.Vc*sym_r +   pc.Vc*sym_r + pb.Vs*sym_i - pc.Vs*sym_i)*sym_i3;
 
 
-	sym->I0  =(pa.Ic + pb.Ic + 	pc.Ic)*sym_3;
-	sym->I1  =(pa.Ic + pb.Ic*sym_r +   pc.Ic*sym_r - pb.Is*sym_i + pc.Is*sym_i)*sym_3;
-	sym->I2 =(pa.Ic + pb.Ic*sym_r +   pc.Ic*sym_r + pb.Is*sym_i - pc.Is*sym_i)*sym_3;
+	sym->I0  =(pa.Ic + pb.Ic + 	pc.Ic)*sym_i3;
+	sym->I1  =(pa.Ic + pb.Ic*sym_r +   pc.Ic*sym_r - pb.Is*sym_i + pc.Is*sym_i)*sym_i3;
+	sym->I2 =(pa.Ic + pb.Ic*sym_r +   pc.Ic*sym_r + pb.Is*sym_i - pc.Is*sym_i)*sym_i3;
 	
 	
 	}
