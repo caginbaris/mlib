@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <settings version="1.0">
 	<category name="measurement_functions.c">
+		<category name="Foldings">
+			<property name="Line1" type="integer">183</property>
+		</category>
 		<category name="Window">
 			<property name="Left" type="integer">-8</property>
 			<property name="Top" type="integer">-31</property>

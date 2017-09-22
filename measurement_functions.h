@@ -2,7 +2,10 @@
 #define pi       3.1415926535897932f
 #define _2pi  	6.2831853071795864f
 #define sqrt2  1.4142135623730950f
+#define isqrt2 0.7071067811865475f
 #define _i2     0.5f
+
+
 
 
 #define sym_i3 0.333333333333333f

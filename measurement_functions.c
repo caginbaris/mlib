@@ -79,8 +79,8 @@ void cs_computations(struct phase_cs_in p_in, struct phase_cs_out *p_out ){
    	p_out->rms_V2 =(p_in.Vc)*(p_in.Vc) + (p_in.Vs)*(p_in.Vs);
     	p_out->rms_I2 =(p_in.Ic)*(p_in.Ic) + (p_in.Is)*(p_in.Is);
 
-   	p_out->rms_V =sqrtf((p_in.Vc)*(p_in.Vc) + (p_in.Vs)*(p_in.Vs));
-    	p_out->rms_I =sqrtf((p_in.Ic)*(p_in.Ic) + (p_in.Is)*(p_in.Is));
+   	p_out->rms_V =sqrtf((p_in.Vc)*(p_in.Vc) + (p_in.Vs)*(p_in.Vs))*isqrt2;
+    	p_out->rms_I =sqrtf((p_in.Ic)*(p_in.Ic) + (p_in.Is)*(p_in.Is))*isqrt2;
 
 	p_out->P= _i2*((p_in.Vc)*(p_in.Ic) +(p_in.Vs)*(p_in.Is));
 	p_out->Q=_i2*((p_in.Vs)*(p_in.Ic) -(p_in.Vc)*(p_in.Is));
@@ -88,8 +88,8 @@ void cs_computations(struct phase_cs_in p_in, struct phase_cs_out *p_out ){
 
 	if(p_out->rms_I2>1.0f){
 
-	p_out->X=p_out->Q/p_out->rms_I2;
-	p_out->R=p_out->X/p_out->rms_I2;
+	p_out->X=2.0f*(p_out->Q/p_out->rms_I2);
+	p_out->R=2.0f*(p_out->P/p_out->rms_I2);
 	
 	}
 
