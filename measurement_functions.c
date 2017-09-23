@@ -114,15 +114,22 @@ void cs_computations(struct phase_cs_in p_in, struct phase_cs_out *p_out ){
 
 void sym_comp(struct phase_cs_in pa, struct phase_cs_in pb,struct phase_cs_in pc,struct sym_out*sym){
 
+	float temp_r,temp_i;
+
+	temp_r=pa.Vc + pb.Vc*sym_r +   pc.Vc*sym_r;
+	temp_i=pb.Vs*sym_i - pc.Vs*sym_i;
 	
 	sym->V0  =(pa.Vc + pb.Vc + 	pc.Vc)*sym_i3;
-	sym->V1  =(pa.Vc + pb.Vc*sym_r +   pc.Vc*sym_r - pb.Vs*sym_i + pc.Vs*sym_i)*sym_i3;
-	sym->V2 =(pa.Vc + pb.Vc*sym_r +   pc.Vc*sym_r + pb.Vs*sym_i - pc.Vs*sym_i)*sym_i3;
+	sym->V1  =(temp_r - temp_i)*sym_i3;
+	sym->V2 =(temp_r + temp_i)*sym_i3;
 
+
+	temp_r=pa.Ic + pb.Ic*sym_r +   pc.Ic*sym_r;
+	temp_i=pb.Is*sym_i - pc.Is*sym_i;
 
 	sym->I0  =(pa.Ic + pb.Ic + 	pc.Ic)*sym_i3;
-	sym->I1  =(pa.Ic + pb.Ic*sym_r +   pc.Ic*sym_r - pb.Is*sym_i + pc.Is*sym_i)*sym_i3;
-	sym->I2 =(pa.Ic + pb.Ic*sym_r +   pc.Ic*sym_r + pb.Is*sym_i - pc.Is*sym_i)*sym_i3;
+	sym->I1  =(temp_r -   temp_i)*sym_i3;
+	sym->I2 =(temp_r +   temp_i)*sym_i3;
 	
 	
 	}
@@ -134,28 +141,28 @@ void sym_mag(struct sym_out sym, struct sym_out *sym_back, struct sym_out *sym_r
 
 	float temp;
 
-	temp = (sym.V0-sym_back->V0)*sym_rms_scale;
-	sym_rms->V0=sqrtf(temp*temp+sym.V0*sym.V0);
+	temp = -(sym.V0-sym_back->V0)*sym_rms_scale;
+	sym_rms->V0=sqrtf(temp*temp+sym.V0*sym.V0)*isqrt2;
 	sym_back->V0=sym.V0;
 
-	temp = (sym.V1-sym_back->V1)*sym_rms_scale;
-	sym_rms->V1=sqrtf(temp*temp+sym.V1*sym.V1);
+	temp = -(sym.V1-sym_back->V1)*sym_rms_scale;
+	sym_rms->V1=sqrtf(temp*temp+sym.V1*sym.V1)*isqrt2;
 	sym_back->V1=sym.V1;
 
-	temp = (sym.V2-sym_back->V2)*sym_rms_scale;
-	sym_rms->V2=sqrtf(temp*temp+sym.V2*sym.V2);
+	temp = -(sym.V2-sym_back->V2)*sym_rms_scale;
+	sym_rms->V2=sqrtf(temp*temp+sym.V2*sym.V2)*isqrt2;;
 	sym_back->V2=sym.V2;
 
 
-	temp = (sym.I0-sym_back->I0)*sym_rms_scale;
+	temp =- (sym.I0-sym_back->I0)*sym_rms_scale;
 	sym_rms->I0=sqrtf(temp*temp+sym.I0*sym.I0);
 	sym_back->I0=sym.I0;
 
-	temp = (sym.I1-sym_back->I1)*sym_rms_scale;
+	temp = -(sym.I1-sym_back->I1)*sym_rms_scale;
 	sym_rms->I1=sqrtf(temp*temp+sym.I1*sym.I1);
 	sym_back->I1=sym.I1;
 
-	temp = (sym.I2-sym_back->I2)*sym_rms_scale;
+	temp = -(sym.I2-sym_back->I2)*sym_rms_scale;
 	sym_rms->I2=sqrtf(temp*temp+sym.I2*sym.I2);
 	sym_back->I2=sym.I2;
 

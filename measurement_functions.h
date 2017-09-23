@@ -8,10 +8,10 @@
 
 
 
-#define sym_i3 0.333333333333333f
-#define sym_r  0.5f
-#define sym_i  0.86602540378443864f
-#define sym_rms_scale 1.0f
+#define sym_i3 			0.333333333333333f
+#define sym_r  			-0.5f
+#define sym_i  			0.8660254037844386f
+#define sym_rms_scale 	15.915494309189533f
 
 
 
@@ -61,7 +61,7 @@ struct sym_out{
 };
 
 void sym_comp(struct phase_cs_in pa, struct phase_cs_in pb,struct phase_cs_in pc,struct sym_out *sym);
-
+void sym_mag(struct sym_out sym, struct sym_out *sym_back, struct sym_out *sym_rms);
 
 
 struct spectra {

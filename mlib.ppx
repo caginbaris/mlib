@@ -2,7 +2,7 @@
 <settings version="1.0">
 	<category name="measurement_functions.c">
 		<category name="Foldings">
-			<property name="Line1" type="integer">183</property>
+			<property name="Line1" type="integer">190</property>
 		</category>
 		<category name="Window">
 			<property name="Left" type="integer">-8</property>
