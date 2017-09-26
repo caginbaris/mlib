@@ -155,15 +155,15 @@ void sym_mag(struct sym_out sym, struct sym_out *sym_back, struct sym_out *sym_r
 
 
 	temp =- (sym.I0-sym_back->I0)*sym_rms_scale;
-	sym_rms->I0=sqrtf(temp*temp+sym.I0*sym.I0);
+	sym_rms->I0=sqrtf(temp*temp+sym.I0*sym.I0)*isqrt2;;
 	sym_back->I0=sym.I0;
 
 	temp = -(sym.I1-sym_back->I1)*sym_rms_scale;
-	sym_rms->I1=sqrtf(temp*temp+sym.I1*sym.I1);
+	sym_rms->I1=sqrtf(temp*temp+sym.I1*sym.I1)*isqrt2;;
 	sym_back->I1=sym.I1;
 
 	temp = -(sym.I2-sym_back->I2)*sym_rms_scale;
-	sym_rms->I2=sqrtf(temp*temp+sym.I2*sym.I2);
+	sym_rms->I2=sqrtf(temp*temp+sym.I2*sym.I2)*isqrt2;;
 	sym_back->I2=sym.I2;
 
 
@@ -214,6 +214,34 @@ void signal_spectra(
 
 
 }
+
+
+//function 7
+//rms from peak detect for pvp
+
+float peak_detect_rms(float rtInput, float *pData,unsigned int pDataCounter, unsigned int dataLength){
+
+
+	unsigned int i=0;
+	float p_peak=0;
+	float n_peak=0;
+
+
+	*(pData+pDataCounter) = rtInput;
+	
+
+	for (i=0;i<dataLength;i++){
+		
+		if(pData[i]>p_peak){p_peak=pData[i];}
+		if(pData[i]<n_peak){n_peak=pData[i];}
+		
+	}
+
+	return (p_peak-n_peak)*pn_rms_scale;
+
+}
+
+
 
 
 

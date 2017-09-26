@@ -5,20 +5,17 @@
 #define isqrt2 0.7071067811865475f
 #define _i2     0.5f
 
-
-
-
 #define sym_i3 			0.333333333333333f
 #define sym_r  			-0.5f
 #define sym_i  			0.8660254037844386f
 #define sym_rms_scale 	15.915494309189533f
 
+#define pn_rms_scale 0.353553390593274f
+
 
 
 float true_rms(float rtInput, float *delayLineArray, unsigned int delayLineCounter, unsigned int arrayLength);
 float cs_generation(float rtInput,float *coeff, unsigned int coeffLength, float *zValues);
-
-
 
 struct phase_cs_in{
 
@@ -81,3 +78,6 @@ void signal_spectra(
 	float *twBufferReal,			//twiddle factor Real coeffs
 	float *twBufferImag,			//twiddle factor Imag coeffs    
 	unsigned int pCounter);
+
+
+float peak_detect_rms(float rtInput, float *pData,unsigned int pDataCounter, unsigned int dataLength);
