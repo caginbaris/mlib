@@ -217,6 +217,30 @@ void signal_spectra(
 
 
 //function 7
+//pvp filtering
+
+float pvp_filter(struct spectra h){
+
+	unsigned int i;
+	float filtered[13]={0};
+	float phase[13]={0};
+	float sum=0;
+
+
+		for(i=0;i<13;i++){ 
+		
+		filtered[i]=(h.foutMag[i])/(i+1);
+		phase[i]=atan2(h.foutImag[i],h.foutReal[i]);
+		sum+=(filtered[i])*sin(phase[i]);
+		
+		};
+
+		return 2*sum;
+
+}
+
+
+//function 8
 //rms from peak detect for pvp
 
 float peak_detect_rms(float rtInput, float *pData,unsigned int pDataCounter, unsigned int dataLength){
