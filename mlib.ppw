@@ -5,6 +5,6 @@
 
 POC_WORKSPACE_VERSION = 1.00
 
-PROJECT = "..\..\..\..\..\..\..\..\..\Documents\Pelles C Projects\myLibConsole\myLibConsole.ppj"
+PROJECT = "..\..\..\..\..\..\..\..\Documents\Pelles C Projects\myLibConsole\myLibConsole.ppj"
 PROJECT = mlib.ppj
 

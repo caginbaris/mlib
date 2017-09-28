@@ -79,5 +79,14 @@ void signal_spectra(
 	float *twBufferImag,			//twiddle factor Imag coeffs    
 	unsigned int pCounter);
 
-float pvp_filter(struct spectra h);
+
+struct pvp_data{
+
+	float a;
+	float b;
+	float c;
+
+};
+
+void pvp_filter(struct pvp_data in,struct pvp_data *in_back,struct pvp_data *out, struct pvp_data *out_back,float ts);
 float peak_detect_rms(float rtInput, float *pData,unsigned int pDataCounter, unsigned int dataLength);

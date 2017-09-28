@@ -219,23 +219,19 @@ void signal_spectra(
 //function 7
 //pvp filtering
 
-float pvp_filter(struct spectra h){
+void pvp_filter(struct pvp_data in,struct pvp_data *in_back,struct pvp_data *out, struct pvp_data *out_back,float ts){
 
-	unsigned int i;
-	float filtered[13]={0};
-	float phase[13]={0};
-	float sum=0;
+out->a=out_back->a + (in.a +in_back->a)*_i2*ts;
+in_back->a=in.a;
+out_back->a=out->a;
 
+out->b=out_back->b + (in.b +in_back->b)*_i2*ts;
+in_back->b=in.b;
+out_back->b=out->b;
 
-		for(i=0;i<13;i++){ 
-		
-		filtered[i]=(h.foutMag[i])/(i+1);
-		phase[i]=atan2(h.foutImag[i],h.foutReal[i]);
-		sum+=(filtered[i])*sin(phase[i]);
-		
-		};
-
-		return 2*sum;
+out->c=out_back->c + (in.c +in_back->c)*_i2*ts;
+in_back->c=in.c;
+out_back->c=out->c;
 
 }
 
