@@ -216,6 +216,30 @@ void signal_spectra(
 }
 
 
+float signal_thd(struct spectra h){
+
+	unsigned int i;
+	float hsum=0,thd=0;
+
+	hsum=0;
+
+	if(h.foutMag[0]!=0.0f){
+	
+		for(i=1;i<13;i++){hsum+=h.foutMag[i]*h.foutMag[i];}
+		
+		thd=100.0f*sqrtf(hsum)/h.foutMag[0];
+
+	}else{
+
+		thd=0;
+	
+	}
+
+	return thd;
+
+}
+
+
 //function 7
 //pvp filtering
 

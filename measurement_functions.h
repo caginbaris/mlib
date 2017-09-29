@@ -80,6 +80,9 @@ void signal_spectra(
 	unsigned int pCounter);
 
 
+float signal_thd(struct spectra h);
+
+
 struct pvp_data{
 
 	float a;

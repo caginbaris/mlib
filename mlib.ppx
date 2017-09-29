@@ -2,23 +2,25 @@
 <settings version="1.0">
 	<category name="measurement_functions.c">
 		<category name="Foldings">
-			<property name="Line1" type="integer">190</property>
+			<property name="Line1" type="integer">76</property>
+			<property name="Line2" type="integer">115</property>
+			<property name="Line3" type="integer">190</property>
 		</category>
 		<category name="Window">
-			<property name="Left" type="integer">26</property>
-			<property name="Top" type="integer">26</property>
-			<property name="Right" type="integer">1466</property>
-			<property name="Bottom" type="integer">498</property>
+			<property name="Left" type="integer">130</property>
+			<property name="Top" type="integer">130</property>
+			<property name="Right" type="integer">1399</property>
+			<property name="Bottom" type="integer">602</property>
 			<property name="Maximized" type="integer">0</property>
 			<property name="Active" type="integer">0</property>
 		</category>
 	</category>
 	<category name="measurement_functions.h">
 		<category name="Window">
-			<property name="Left" type="integer">52</property>
-			<property name="Top" type="integer">52</property>
-			<property name="Right" type="integer">1321</property>
-			<property name="Bottom" type="integer">524</property>
+			<property name="Left" type="integer">156</property>
+			<property name="Top" type="integer">156</property>
+			<property name="Right" type="integer">1425</property>
+			<property name="Bottom" type="integer">628</property>
 			<property name="Maximized" type="integer">0</property>
 			<property name="Active" type="integer">0</property>
 		</category>
