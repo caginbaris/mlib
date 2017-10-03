@@ -215,7 +215,8 @@ void signal_spectra(
 
 }
 
-
+// function-7
+//thd calculation
 float signal_thd(struct spectra h){
 
 	unsigned int i;
@@ -282,6 +283,27 @@ float peak_detect_rms(float rtInput, float *pData,unsigned int pDataCounter, uns
 	}
 
 	return (p_peak-n_peak)*pn_rms_scale;
+
+}
+
+
+
+float thermal_status(struct thermal_parameters therm, float mem ){
+
+
+	float temp;
+	float t_constant;
+
+	t_constant = therm.ts / therm.tau;
+
+	if (therm.freeze == 0)
+	{
+		temp = t_constant*(therm.rms * therm.rms ) / (therm.Inom * therm.Inom) + mem * (1 - t_constant);
+
+	}
+	mem = temp;
+
+	return temp;
 
 }
 

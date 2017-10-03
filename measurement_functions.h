@@ -93,3 +93,14 @@ struct pvp_data{
 
 void pvp_filter(struct pvp_data in,struct pvp_data *in_back,struct pvp_data *out, struct pvp_data *out_back,float ts);
 float peak_detect_rms(float rtInput, float *pData,unsigned int pDataCounter, unsigned int dataLength);
+
+
+struct thermal_parameters{
+
+	float rms;
+	float Inom;
+	float tau;
+	float ts;
+	unsigned int freeze;
+
+};
