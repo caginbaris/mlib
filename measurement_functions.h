@@ -104,3 +104,5 @@ struct thermal_parameters{
 	unsigned int freeze;
 
 };
+
+float thermal_status(struct thermal_parameters therm, float mem);
