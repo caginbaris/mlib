@@ -32,9 +32,10 @@ mlib.lib: \
 # 
 output\measurement_functions.obj: \
 	measurement_functions.c \
-	measurement_functions.h
+	mlib_constants.h \
+	mlib_definitions.h
 	$(CC) $(CCFLAGS) "$!" -Fo"$@"
 
-.SILENT:
-
 .EXCLUDEDFILES:
+
+.SILENT:
