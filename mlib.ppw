@@ -6,5 +6,5 @@
 POC_WORKSPACE_VERSION = 1.00
 
 PROJECT = mlib.ppj
-PROJECT = ..\..\..\..\..\..\..\..\Documents\myLibConsole\myLibConsole.ppj
+PROJECT = ..\..\protection_functions\plib\plib\plib.ppj
 
