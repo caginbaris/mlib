@@ -262,6 +262,38 @@ out_back->c=out->c;
 
 
 //function 8
+//pvp postfiltering
+
+float pvp_post_filter(float rtInput,float *coeff, unsigned int coeffLength, float *zValues){
+
+	unsigned int i;
+     float *z1_ptr,*z2_ptr,*coeff_ptr;
+     float output;
+
+	z1_ptr=zValues; 		//background data
+	z2_ptr=z1_ptr; 		//data update
+	coeff_ptr=coeff+coeffLength-1;  //last element
+
+
+	output=(*z1_ptr++) *(*coeff_ptr--);
+
+	for(i=2;i<coeffLength;i++){
+	
+	*z2_ptr++ =*z1_ptr;
+	output+=(*z1_ptr++) *(*coeff_ptr--);
+
+	}
+
+
+	output+=rtInput *(*coeff_ptr);
+	*z2_ptr=rtInput;
+
+	return(output);
+
+}
+
+
+//function 9
 //rms from peak detect for pvp
 
 float peak_detect_rms(float rtInput, float *pData,unsigned int pDataCounter, unsigned int dataLength){
@@ -286,7 +318,8 @@ float peak_detect_rms(float rtInput, float *pData,unsigned int pDataCounter, uns
 
 }
 
-
+//function 10
+//thermal comp.
 
 float thermal_status(struct thermal_parameters therm, float mem)
 {
@@ -310,8 +343,9 @@ float thermal_status(struct thermal_parameters therm, float mem)
 
 }
 
-
-float pfilter(float rtInput ,float *zValues , unsigned int N){
+//function 11
+//prefiltering for conversion
+float prefilter(float rtInput ,float *zValues , unsigned int N){
 
 	unsigned int i;
       float *z1_ptr,*z2_ptr;

@@ -5,14 +5,6 @@
 			<property name="Line1" type="integer">115</property>
 			<property name="Line2" type="integer">190</property>
 		</category>
-		<category name="Window">
-			<property name="Left" type="integer">52</property>
-			<property name="Top" type="integer">52</property>
-			<property name="Right" type="integer">1286</property>
-			<property name="Bottom" type="integer">598</property>
-			<property name="Maximized" type="integer">0</property>
-			<property name="Active" type="integer">0</property>
-		</category>
 	</category>
 	<category name="measurement_functions.h" />
 	<category name="mlib_definitions.h">
