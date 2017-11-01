@@ -314,7 +314,7 @@ float thermal_status(struct thermal_parameters therm, float mem)
 float pfilter(float rtInput ,float *zValues , unsigned int N){
 
 	unsigned int i;
-      float *z1_ptr,*z2_ptr,*coeff_ptr;
+      float *z1_ptr,*z2_ptr;
       float output;
 	float invN;
 
