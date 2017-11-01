@@ -70,6 +70,8 @@ struct pvp_data{
 
 };
 
+float pvp_post_filter(float rtInput,float *coeff, unsigned int coeffLength, float *zValues);
+
 struct thermal_parameters{
 
 	float rms;
@@ -79,6 +81,9 @@ struct thermal_parameters{
 	unsigned int freeze;
 
 };
+
+
+float prefilter(float rtInput ,float *zValues , unsigned int N);
 
 
 
